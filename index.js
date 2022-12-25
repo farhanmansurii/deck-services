@@ -1,6 +1,7 @@
 const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
+require("dotenv").config();
 const mongoose = require("mongoose");
 const DeckModel = require("./Schema/Deck");
 const app = express();
@@ -11,7 +12,7 @@ app.use(
 );
 app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("WelcomeBoy to the API new");
+  res.send("Hi , Welcome to the DEX API");
 });
 
 // //DECK endpoints
@@ -59,11 +60,7 @@ app.get("/deck/:deckId/card", async (req, res) => {
   res.json(deck);
 });
 
-mongoose
-  .connect(
-    "mongodb+srv://farhan:farhan@cluster0.23dxfen.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("connected to DB");
-  });
+mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log("connected to DB");
+});
 app.listen(5000, () => console.log("listening on port 5000"));
